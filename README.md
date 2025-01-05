@@ -1,5 +1,5 @@
 # LeiloesTD
-repositório para estudos de versionamento em uma atividade.
+Este projeto permite o cadastro e consulta em um sistema de gerenciamento de leilões.
 
 ## Tecnologias utilizadas
 Java, mySQL.
