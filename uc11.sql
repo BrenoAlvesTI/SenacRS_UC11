@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
@@ -7,6 +12,10 @@
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.6
 
+<<<<<<< HEAD
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -21,17 +30,39 @@ SET time_zone = "+00:00";
 -- Banco de dados: `uc11`
 --
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+CREATE DATABASE uc11_atv1;
+USE uc11_atv1;
+=======
 -- --------------------------------------------------------
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
+=======
+-- --------------------------------------------------------
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
 
 --
 -- Estrutura da tabela `produtos`
 --
 
 CREATE TABLE `produtos` (
+<<<<<<< HEAD
+<<<<<<< HEAD
+  `id` BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
+  `nome` TEXT NOT NULL,
+  `valor` DECIMAL(10, 2) NOT NULL,
+  `status` TEXT NOT NULL
+=======
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
   `id` bigint(20) UNSIGNED NOT NULL,
   `nome` text DEFAULT NULL,
   `valor` int(11) DEFAULT NULL,
   `status` text DEFAULT NULL
+<<<<<<< HEAD
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -49,10 +80,19 @@ INSERT INTO `produtos` (`id`, `nome`, `valor`, `status`) VALUES
 --
 
 --
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
 -- Índices para tabela `produtos`
 --
 ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
+<<<<<<< HEAD
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
@@ -68,3 +108,11 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+select * from produtos;
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa

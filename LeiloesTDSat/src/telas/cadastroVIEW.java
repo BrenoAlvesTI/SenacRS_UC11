@@ -109,7 +109,15 @@ public class cadastroVIEW extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
+<<<<<<< HEAD
+<<<<<<< HEAD
+                        .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+=======
                         .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
+=======
+                        .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastrar)
                 .addGap(18, 18, 18)
@@ -167,6 +175,17 @@ public class cadastroVIEW extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "ATENÇÃO! O Campo Valor não pode estar vazio.", "Erro!", JOptionPane.ERROR_MESSAGE);
             txtValor.requestFocus();
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+        else if (!txtNome.getText().trim().matches("[\\p{L} ]+")){
+            JOptionPane.showMessageDialog(null, "ATENÇÃO! O Campo Nome só pode conter letras.", "Erro!", JOptionPane.ERROR_MESSAGE);            
+            txtNome.setText("");
+            txtNome.requestFocus();
+        }
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
         else {
             empty = false;
         }
@@ -180,11 +199,29 @@ public class cadastroVIEW extends javax.swing.JFrame {
         String valor = txtValor.getText();
         String status = "A Venda";
         produto.setNome(nome);
+<<<<<<< HEAD
+<<<<<<< HEAD
+        produto.setValor(Double.parseDouble(valor.replace(",", ".")));
+        produto.setStatus(status);
+        
+        ProdutosDAO produtodao = new ProdutosDAO();
+        produtodao.Salvar(produto);
+        
+        txtNome.setText("");
+        txtValor.setText("");
+        txtNome.requestFocus();
+=======
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
         produto.setValor(Integer.parseInt(valor));
         produto.setStatus(status);
         
         ProdutosDAO produtodao = new ProdutosDAO();
         produtodao.cadastrarProduto(produto);
+<<<<<<< HEAD
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
+=======
+>>>>>>> c450c737a71acf335b855c0a1a2612704236b0fa
     }
 
 }
