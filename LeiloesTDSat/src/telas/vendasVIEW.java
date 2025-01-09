@@ -1,9 +1,17 @@
 package telas;
 
+import dao.ProdutosDAO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.ProdutosDTO;
+
 public class vendasVIEW extends javax.swing.JFrame {
 
     public vendasVIEW() {
         initComponents();
+        preencherTabela();
     }
 
     @SuppressWarnings("unchecked")
@@ -85,4 +93,42 @@ public class vendasVIEW extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblProdutos;
     // End of variables declaration//GEN-END:variables
+
+    public void preencherTabela() {
+        ProdutosDAO produtoDAO = new ProdutosDAO();
+
+        try {
+            // Obter a lista de produtos
+            List<ProdutosDTO> listaProdutos = produtoDAO.getProdutosVendidos();
+
+            // Verificar se a lista retornada é nula ou vazia
+            if (listaProdutos == null || listaProdutos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nenhum produto encontrado no banco de dados!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            // Obter o modelo da tabela
+            DefaultTableModel tabelaProdutos = (DefaultTableModel) tblProdutos.getModel();
+            tabelaProdutos.setNumRows(0); // Limpar a tabela antes de preenchê-la novamente
+
+            // Preencher a tabela com os dados
+            for (ProdutosDTO p : listaProdutos) {
+                Object[] obj = new Object[] { 
+                    p.getId(),            
+                    p.getNome(),        
+                    p.getValor(),   
+                    p.getStatus()
+                };
+                tabelaProdutos.addRow(obj);
+            }
+
+            // Configurar o TableRowSorter para ordenação
+            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tabelaProdutos);
+            tblProdutos.setRowSorter(sorter);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao preencher a tabela: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 }

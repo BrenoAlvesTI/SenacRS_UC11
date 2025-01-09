@@ -91,6 +91,32 @@ public class ProdutosDAO {
             return false;
         }
     }
+    
+    public List<ProdutosDTO> getProdutosVendidos() { 
+        String sql = "SELECT * FROM produtos WHERE status = 'Vendido'"; // Seleciona todos os produtos
+
+        try {
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<ProdutosDTO> listaProdutos = new ArrayList<>();
+
+            while (rs.next()) { 
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getDouble("valor"));
+                produto.setStatus(rs.getString("status"));
+                listaProdutos.add(produto);
+            }
+
+            return listaProdutos;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
                 
 }
 
