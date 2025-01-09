@@ -3,14 +3,17 @@ package telas;
 import model.ProdutosDTO;
 import dao.ProdutosDAO;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class listagemVIEW extends javax.swing.JFrame {
 
     
     public listagemVIEW() {
         initComponents();
-        listarProdutos();
+        preencherTabela();
     }
 
     @SuppressWarnings("unchecked")
@@ -18,19 +21,19 @@ public class listagemVIEW extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaProdutos = new javax.swing.JTable();
+        tblProdutos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txtID = new javax.swing.JTextPane();
+        txtId = new javax.swing.JTextPane();
         btnVender = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnVendas = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        listaProdutos.setModel(new javax.swing.table.DefaultTableModel(
+        tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -41,7 +44,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                 "ID", "Nome", "Valor", "Status"
             }
         ));
-        jScrollPane1.setViewportView(listaProdutos);
+        jScrollPane1.setViewportView(tblProdutos);
 
         jLabel1.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
         jLabel1.setText("Lista de Produtos");
@@ -49,7 +52,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
         jLabel2.setText("Vender Produto (ID)");
 
-        jScrollPane2.setViewportView(txtID);
+        jScrollPane2.setViewportView(txtId);
 
         btnVender.setText("Vender");
         btnVender.addActionListener(new java.awt.event.ActionListener() {
@@ -120,20 +123,16 @@ public class listagemVIEW extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = txtID.getText();
-        
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        VenderProduto();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        vendasVIEW vendas = new vendasVIEW(); 
+        vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -149,29 +148,59 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable listaProdutos;
-    private javax.swing.JTextPane txtID;
+    private javax.swing.JTable tblProdutos;
+    private javax.swing.JTextPane txtId;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos(){
+    public void preencherTabela() {
+        ProdutosDAO produtoDAO = new ProdutosDAO();
+
         try {
-            ProdutosDAO produtosdao = new ProdutosDAO();
-            
-            DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
-            model.setNumRows(0);
-            
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
-                model.addRow(new Object[]{
-                    listagem.get(i).getId(),
-                    listagem.get(i).getNome(),
-                    listagem.get(i).getValor(),
-                    listagem.get(i).getStatus()
-                });
+            // Obter a lista de produtos
+            List<ProdutosDTO> listaProdutos = produtoDAO.getProdutosTotal();
+
+            // Verificar se a lista retornada é nula ou vazia
+            if (listaProdutos == null || listaProdutos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nenhum produto encontrado no banco de dados!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
+
+            // Obter o modelo da tabela
+            DefaultTableModel tabelaProdutos = (DefaultTableModel) tblProdutos.getModel();
+            tabelaProdutos.setNumRows(0); // Limpar a tabela antes de preenchê-la novamente
+
+            // Preencher a tabela com os dados
+            for (ProdutosDTO p : listaProdutos) {
+                Object[] obj = new Object[] { 
+                    p.getId(),            
+                    p.getNome(),        
+                    p.getValor(),   
+                    p.getStatus()
+                };
+                tabelaProdutos.addRow(obj);
+            }
+
+            // Configurar o TableRowSorter para ordenação
+            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tabelaProdutos);
+            tblProdutos.setRowSorter(sorter);
+
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao preencher a tabela: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    
     }
+
+    private void VenderProduto(){
+        int id = Integer.parseInt(txtId.getText());
+        String novoStatus = "Vendido";
+        
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        
+        produtosDAO.atualizarStatus(id, novoStatus);
+        
+        preencherTabela();
+        
+        txtId.setText("");
+        txtId.requestFocus();
+    }
+    
 }
